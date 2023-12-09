@@ -4,14 +4,14 @@
 
 <main>
 
-  <h1>All lists</h1>
+  <h1>Search</h1>
 
 </main>
 
 <style>
 
   h1 {
-    color: var(--text-active);
+    color: var(--text-active)
   }
 
 </style>

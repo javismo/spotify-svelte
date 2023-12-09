@@ -6,11 +6,20 @@
 </script>
 
 <section class="player-container">
-  Player
+
+  <article>
+    Current disc
+  </article>
+
+  <article>
+    Player
+  </article>
+
+  <article>
+    Player Options
+  </article>
+
 </section>
-<!-- <button on:click={increment}>
-  count is {count}
-</button> -->
 
 <style>
 

@@ -1,29 +1,43 @@
-<script>
-  import svelteLogo from './assets/svelte.svg'
+<script lang="ts">
+
+  import { createEventDispatcher } from 'svelte';
+
   import MainMenu from './lib/MainMenu.svelte'
   import Library from './lib/Library.svelte'
-  import Lists from './lib/Lists.svelte'
+  import DirectoryContainer from './lib/DirectoryContainer.svelte'
   import Player from './lib/Player.svelte'
+
+  const dispatch = createEventDispatcher();
+
+  export let status = 'idle';
+
+  const updateStatus = (type) => {
+
+    if (status === type) {
+      status = 'idle';
+    } else {
+      status = type
+    }
+
+    dispatch('updateStatus', {status})
+  }
+
 </script>
 
 <main>
  
   <section>
     
-    <aside>
-      
+    <article class:undefined="{status === 'idle'}" class:section-left-small={status === 'minimize'} class:section-left-bigger={status === 'maximize'}>
+
       <MainMenu />
-      
-      <Library />
+      <Library minimize="{() => updateStatus('minimize')}" maximize="{() => updateStatus('maximize')}" status="{status}" />
 
-    </aside>
+    </article>
 
-    <aside>
-      <!-- <Header /> -->
-
-      <Lists />
-
-    </aside>
+    <article class:undefined="{status === 'idle'}" class:section-right-bigger={status === 'minimize'} class:section-right-small={status === 'maximize'}>
+      <DirectoryContainer />
+    </article>
     
   </section>
 
@@ -52,14 +66,32 @@
     align-items: center;
   }
 
-  main section aside:first-child {
+  main section article:first-child {
     height: 100%;
     width: 420px;
+    transition: 0.5s ease all;
   }
 
-  main section aside:last-child {
+  .section-left-small {
+    width: 80px !important;
+  }
+
+  .section-left-bigger {
+    width: 50% !important;
+  }
+
+  main section article:last-child {
     height: 100%;
     width: calc(100% - 420px);
+    transition: 0.5s ease all;
+  }
+
+  .section-right-bigger {
+    width: calc(100% - 80px) !important;
+  }
+
+  .section-right-small {
+    width: 50% !important;
   }
 
   main section:last-child {
@@ -71,21 +103,4 @@
     bottom: 0;
   }
 
-
-
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
 </style>
